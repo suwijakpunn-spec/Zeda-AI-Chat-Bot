@@ -1,4 +1,4 @@
-import streamlit as st  # บรรทัดนี้สำคัญมาก ห้ามลบ
+import streamlit as st
 import google.generativeai as genai
 import os
 

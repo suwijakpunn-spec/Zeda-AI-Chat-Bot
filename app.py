@@ -80,6 +80,8 @@ with col2:
 # สร้างกล่องแชท
 if "messages" not in st.session_state:
     st.session_state.messages = []
+    # เพิ่มข้อความต้อนรับของ AI ที่มีชื่อ Zeda
+    st.session_state.messages.append({"role": "assistant", "content": "สวัสดีครับ ผมคือ Zeda AI ที่ใช้โมเดลจาก Google มีอะไรให้ผมช่วยไหมครับ?"})
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -103,3 +105,4 @@ if prompt := st.chat_input("type anythings..."):
                 st.session_state.messages.append({"role": "assistant", "content": response.text})
             except Exception as e:
                 st.error(f"เกิดข้อผิดพลาด: {e}")
+

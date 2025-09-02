@@ -32,12 +32,23 @@ st.markdown("""
     border-radius: 15px;
     border: none;
 }
+.st-emotion-cache-1aehpbu {
+    background-color: #0E1117;
+}
 
-/* ปรับสีปุ่ม */
-.st-emotion-cache-12822d5 {
+/* ปรับแต่งปุ่มใน Sidebar */
+.sidebar .stButton>button {
     background-color: #262626;
-    border-radius: 10px;
     border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: left;
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -52,10 +63,10 @@ with st.sidebar:
     st.markdown("## zeda0.5")
     st.markdown("by **scStudio**")
     st.markdown("---")
-    st.button("Chat history")
-    st.button("Make my own games")
-    st.button("Code a AI")
-    st.button("Roblox has ban")
+    st.button("Chat history", key="chat_history_btn")
+    st.button("Make my own games", key="make_games_btn")
+    st.button("Code a AI", key="code_ai_btn")
+    st.button("Roblox has ban", key="roblox_ban_btn")
     st.markdown("---")
     st.markdown("scStudio<br>Free mode", unsafe_allow_html=True)
 

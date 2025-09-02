@@ -119,11 +119,11 @@ for message in st.session_state.messages:
 if prompt := st.chat_input("type anythings..."):
     prompt_lower = prompt.lower()
     st.session_state.messages.append({"role": "user", "content": prompt})
-
+    
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    if "your name" in prompt_lower or "ชื่ออะไร" in prompt_lower or "คุณชื่ออะไร" in prompt_lower:
+    if "your name" in prompt_lower or "ชื่ออะไร" in prompt_lower:
         response_text = "ผมชื่อ Zeda ครับ เป็น AI ที่พัฒนาโดย scStudio และใช้โมเดลจาก Google"
         with st.chat_message("assistant"):
             st.markdown(response_text)

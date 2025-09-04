@@ -3,7 +3,8 @@ cookie:
   key: "13245778"
   name: "scStudio"
 preauthorized:
-  emails: [suwijakpunn@gamil.com]
+  emails: []
 credentials:
-  usernames: {scStudio}
+  usernames: {}
+
 

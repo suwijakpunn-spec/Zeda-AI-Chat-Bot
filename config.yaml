@@ -1,8 +1,8 @@
 cookie:
   expiry_days: 30
-  key: "13245778" # อย่าลืมเปลี่ยนเป็นค่าสุ่มของคุณเอง
+  key: "13245778"
   name: "scStudio"
 preauthorized:
-  emails: [] # ตั้งค่าเป็น [] เพื่อให้สามารถลงทะเบียนใหม่ได้
+  emails: []
 credentials:
-  usernames: {} # ตั้งค่าเป็น {} เพื่อให้รองรับการเพิ่มข้อมูลผู้ใช้ใหม่
+  usernames: {}

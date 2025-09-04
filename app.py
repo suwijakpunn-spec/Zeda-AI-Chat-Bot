@@ -5,7 +5,7 @@ import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
 
-# --- ตั้งค่าหน้าเว็บและ CSS สำหรับ UI ---
+# --- Set up the page and CSS ---
 st.set_page_config(
     page_title="ZEDA.AI",
     layout="wide",
@@ -14,12 +14,12 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-/* ปรับปรุงฟอนต์ทั่วทั้งแอป */
+/* Adjust font throughout the app */
 body {
     font-family: sans-serif;
 }
 
-/* ปรับสีพื้นหลังของหน้าหลักและ sidebar */
+/* Adjust background colors of the main page and sidebar */
 .st-emotion-cache-1cypcdb {
     background-color: #000000;
 }
@@ -37,7 +37,7 @@ body {
     background-color: #121212;
 }
 
-/* ซ่อนส่วนประกอบของ Streamlit ที่ไม่ต้องการ */
+/* Hide unwanted Streamlit components */
 .st-emotion-cache-1aehpbu {
     display: none;
 }
@@ -51,7 +51,7 @@ body {
     display: none;
 }
 
-/* ปรับแต่ง sidebar */
+/* Customize the sidebar */
 .st-emotion-cache-1d3744c {
     background-color: #121212;
     color: white;
@@ -65,7 +65,7 @@ body {
     border-radius: 10px;
 }
 
-/* สร้างปุ่มแบบกำหนดเองด้วย HTML/CSS */
+/* Create custom buttons with HTML/CSS */
 .sidebar-button {
     background-color: #212121;
     color: white;
@@ -83,7 +83,7 @@ body {
 </style>
 """, unsafe_allow_html=True)
 
-# --- ส่วนของโค้ด AI และการทำงานหลัก ---
+# --- AI and main code section ---
 genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
 model = genai.GenerativeModel("gemini-2.5-flash")
 
@@ -92,10 +92,10 @@ try:
     with open('config.yaml') as file:
         config = yaml.load(file, Loader=SafeLoader)
 except FileNotFoundError:
-    st.error("ไม่พบไฟล์ config.yaml กรุณาสร้างไฟล์และใส่ข้อมูลตามตัวอย่างที่แนะนำ")
+    st.error("Cannot find config.yaml. Please create the file with the recommended settings.")
     st.stop()
 
-# แก้ไขการเรียกใช้ Authenticator ให้ถูกต้องตามเวอร์ชันล่าสุด
+# Correctly initialize Authenticator for the new version
 authenticator = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
@@ -103,14 +103,14 @@ authenticator = stauth.Authenticate(
     config['cookie']['expiry_days']
 )
 
-# --- สร้างตัวเลือกสำหรับ Login และ Register ---
+# --- Login and Register options ---
 st.sidebar.title("ZEDA.AI")
 st.sidebar.markdown("by **scStudio**")
-choice = st.sidebar.radio("เลือกเมนู", ["Login", "Register"])
+choice = st.sidebar.radio("Select Menu", ["Login", "Register"])
 
 if choice == "Login":
     st.title("Login")
-    # แก้ไขการเรียกใช้ login ให้ถูกต้อง
+    # Correct login function call
     name, authentication_status, username = authenticator.login('Login', location='main')
     
     if authentication_status:
@@ -135,10 +135,10 @@ if choice == "Login":
         with col2:
             st.markdown("<p style='text-align: right; color: #888;'>zeda0.5</p>", unsafe_allow_html=True)
 
-        # สร้างกล่องแชท
+        # Chat box
         if "messages" not in st.session_state:
             st.session_state.messages = []
-            st.session_state.messages.append({"role": "assistant", "content": "สวัสดีครับ ผมคือ Zeda AI ที่ใช้โมเดลจาก Google มีอะไรให้ผมช่วยไหมครับ?"})
+            st.session_state.messages.append({"role": "assistant", "content": "Hello! I am Zeda AI, using a model from Google. How can I help you today?"})
         
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
@@ -151,8 +151,8 @@ if choice == "Login":
             with st.chat_message("user"):
                 st.markdown(prompt)
 
-            if "your name" in prompt_lower or "ชื่ออะไร" in prompt_lower:
-                response_text = "ผมชื่อ Zeda ครับ เป็น AI ที่พัฒนาโดย scStudio และใช้โมเดลจาก Google"
+            if "your name" in prompt_lower or "What is your name" in prompt_lower:
+                response_text = "My name is Zeda. I'm an AI developed by scStudio using a Google model."
                 with st.chat_message("assistant"):
                     st.markdown(response_text)
                 st.session_state.messages.append({"role": "assistant", "content": response_text})
@@ -169,7 +169,7 @@ if choice == "Login":
                             st.markdown(response.text)
                             st.session_state.messages.append({"role": "assistant", "content": response.text})
                         except Exception as e:
-                            st.error(f"เกิดข้อผิดพลาด: {e}")
+                            st.error(f"An error occurred: {e}")
 
     elif authentication_status == False:
         st.error('Username/password is incorrect')
@@ -179,7 +179,7 @@ if choice == "Login":
 elif choice == "Register":
     st.title("Register New User")
     try:
-        # แก้ไขการเรียกใช้ register_user ให้ถูกต้อง
+        # The 'preauthorization' parameter is now part of the register_user function, not Authenticate
         email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(
             'Register user',
             preauthorization=False
@@ -189,7 +189,7 @@ elif choice == "Register":
             
             with open('config.yaml', 'w') as file:
                 yaml.dump(config, file, default_flow_style=False)
-            st.info("โปรดล็อกอินด้วยข้อมูลที่คุณเพิ่งลงทะเบียน")
+            st.info("Please log in with your newly registered information.")
 
     except Exception as e:
         st.error(e)

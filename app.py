@@ -43,7 +43,7 @@ choice = st.sidebar.selectbox("เลือกเมนู", ["Login", "Register
 
 if choice == "Login":
     st.title("Login")
-    name, authentication_status, username = authenticator.login('Login', 'main')
+    name, authentication_status, username = authenticator.login('Login')
     
     if authentication_status:
         authenticator.logout('Logout', 'sidebar')
@@ -125,4 +125,5 @@ elif choice == "Register":
 
     except Exception as e:
         st.error(e)
+
 

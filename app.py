@@ -193,3 +193,4 @@ elif choice == "Register":
 
     except Exception as e:
         st.error(e)
+

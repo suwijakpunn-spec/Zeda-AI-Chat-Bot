@@ -2,11 +2,11 @@ import streamlit as st
 import google.generativeai as genai
 import os
 
-5 # --- ตั้งค่าหน้าเว็บและ CSS สำหรับ UI ---
-6   st.set_page_config(st.set_page_config(
-  page_title="ZEDA.AI",
-  layout="wide",
-  initial_sidebar_state="expanded"
+# --- ตั้งค่าหน้าเว็บและ CSS สำหรับ UI ---
+st.set_page_config(
+    page_title="ZEDA.AI",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
                        
 st.markdown("""
@@ -142,5 +142,6 @@ if prompt := st.chat_input("type anythings..."):
                     st.session_state.messages.append({"role": "assistant", "content": response.text})
                 except Exception as e:
                     st.error(f"เกิดข้อผิดพลาด: {e}")
+
 
 

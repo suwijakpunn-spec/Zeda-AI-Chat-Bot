@@ -110,14 +110,19 @@ if choice == "Login":
 
 elif choice == "Register":
     st.title("Register New User")
-try:
-    if authenticator.register_user('Register user', preauthorization=config['preauthorized']['emails']):
-        st.success('User registered successfully!')
-        
-        with open('config.yaml', 'w') as file:
-            yaml.dump(config, file, default_flow_style=False)
-        st.info("โปรดล็อกอินด้วยข้อมูลที่คุณเพิ่งลงทะเบียน")
-        
-except Exception as e:
-    st.error(e)
+    try:
+        # ใช้ config['preauthorized']['emails'] ในฟังก์ชัน register_user
+        email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user(
+            'Register user', 
+            preauthorization=config['preauthorized']['emails']
+        )
+        if email_of_registered_user:
+            st.success('User registered successfully!')
+            
+            with open('config.yaml', 'w') as file:
+                yaml.dump(config, file, default_flow_style=False)
+            st.info("โปรดล็อกอินด้วยข้อมูลที่คุณเพิ่งลงทะเบียน")
+
+    except Exception as e:
+        st.error(e)
 

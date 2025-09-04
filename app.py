@@ -35,8 +35,7 @@ authenticator = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
     config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
+    config['cookie']['expiry_days']
 )
 
 # --- สร้างตัวเลือกสำหรับ Login และ Register ---
@@ -111,15 +110,14 @@ if choice == "Login":
 
 elif choice == "Register":
     st.title("Register New User")
-    try:
-        email_of_registered_user, username_of_registered_user, name_of_registered_user = authenticator.register_user('Register user', preauthorization=False)
-        if email_of_registered_user:
-            st.success('User registered successfully!')
-            
-            # บันทึกข้อมูลผู้ใช้ใหม่ลงในไฟล์ config.yaml
-            with open('config.yaml', 'w') as file:
-                yaml.dump(config, file, default_flow_style=False)
-            st.info("โปรดล็อกอินด้วยข้อมูลที่คุณเพิ่งลงทะเบียน")
+try:
+    if authenticator.register_user('Register user', preauthorization=config['preauthorized']['emails']):
+        st.success('User registered successfully!')
+        
+        with open('config.yaml', 'w') as file:
+            yaml.dump(config, file, default_flow_style=False)
+        st.info("โปรดล็อกอินด้วยข้อมูลที่คุณเพิ่งลงทะเบียน")
+        
+except Exception as e:
+    st.error(e)
 
-    except Exception as e:
-        st.error(e)
